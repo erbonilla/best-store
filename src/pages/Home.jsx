@@ -1,3 +1,4 @@
+import React from 'react'; // Add this import
 
 export default function Home() {
     return (
@@ -5,5 +6,4 @@ export default function Home() {
             <h2>Welcome to our website!</h2>
         </div>
     );
-
 }

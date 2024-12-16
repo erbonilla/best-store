@@ -1,9 +1,10 @@
 import { useState } from "react"; 
 import React from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate, useParams } from "react-router-dom"; 
 
 export default function EditProduct() {
 
+    const params = useParams();
     const [validationErrors, setValidationErrors] = useState({}); 
 
     const navigate = useNavigate();
@@ -14,8 +15,8 @@ export default function EditProduct() {
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
 
-        if (!data.name || !data.brand || !data.category || !data.price 
-            || !data.description || !data.image) {
+        if (!product.name || !product.brand || !product.category || !product.price 
+            || !product.description) {
             alert("Please fill all the fields!");
             return;
         }
@@ -49,7 +50,7 @@ export default function EditProduct() {
                 <div className="row mb-3">
                         <label className="col-sm-4 col-form-label">ID</label>
                         <div className="col-sm-8">
-                            <input readOnly className="form-control-plaintext" defaultValue={"??"}/>
+                            <input readOnly className="form-control-plaintext" defaultValue={params.id}/>
                         </div>
                     </div>
 
@@ -103,11 +104,32 @@ export default function EditProduct() {
                         </div>
                     </div>
 
+
+                    <div className="row mb-3">
+                        <div className="offset-sm-4 col-sm-8">
+                           <img src={"https//:localhost:4000/images/ " + "22866337.jpg"} 
+                                width="150px" alt="..." 
+                           />
+                          
+                        </div>
+                    </div>
+
+
                     <div className="row mb-3">
                         <label className="col-sm-4 col-form-label">Image</label>
                         <div className="col-sm-8">
                             <input className="form-control" name="image" type="file" />
                             <span className="text-danger">{validationErrors.image}</span>
+                        </div>
+                    </div>
+
+
+
+                    <div className="row mb-3">
+                        <label className="col-sm-4 col-form-label">Created At</label>
+                        <div className="col-sm-8">
+                            <input readOnly className="form-control" defaultValue={"2023-07-13"} />
+                            
                         </div>
                     </div>
 

@@ -1,151 +1,206 @@
-import { useState } from "react"; 
 import React from "react";
-import { Link, useNavigate, useParams } from "react-router-dom"; 
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../../../AppContext";
 
-export default function EditProduct() {
+export default function ProductList() {
+    const [products, setProducts] = useState([])
+    const { userCredentials, setUserCredentials } = useContext(AppContext)
+    const navigate = useNavigate()
 
-    const params = useParams();
-    const [validationErrors, setValidationErrors] = useState({}); 
 
-    const navigate = useNavigate();
+    // pagination functionality
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const pageSize = 5
 
-    async function handleSubmit(event) {
-        event.preventDefault();
 
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData.entries());
+    // search functionality
+    const [search, setSearch] = useState("")
 
-        if (!product.name || !product.brand || !product.category || !product.price 
-            || !product.description) {
-            alert("Please fill all the fields!");
-            return;
-        }
 
-        try {
-            const response = await fetch("http://localhost:4000/products", {
-                method: "PATCH",
-                body: formData,
-            });
+    // sort functionality
+    const [sortColumn, setSortColumn] = useState({ column: "id", orderBy: "desc" })
 
-            // Removed unused variable 'responseData' and processed the response inline
-            if (response.ok) {
-                navigate("/admin/products");
-            } else if (response.status === 400) {
-                const errorData = await response.json(); // Parse the response to extract validation errors
-                setValidationErrors(errorData);
-            } else {
-                alert("Unable to create the product!");
+
+    function getProducts() {
+        let url = "http://localhost:4000/products?_page=" + currentPage + "&_limit=" + pageSize
+            + "&q=" + search + "&_sort=" + sortColumn.column + "&_order=" + sortColumn.orderBy
+        console.log("url=" + url)
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    let totalCount = response.headers.get('X-Total-Count')
+                    console.log("X-Total-Count:" + totalCount)
+                    let pages = Math.ceil(totalCount / pageSize)
+                    console.log("Total Pages:" + pages)
+                    setTotalPages(pages)
+                    return response.json()
+                }
+
+                throw new Error()
+            })
+            .then(data => {
+                setProducts(data)
+            })
+            .catch(error => {
+                alert("Unable to get the data")
+            })
+    }
+
+    useEffect(getProducts, [currentPage, search, sortColumn])
+
+
+    function deleteProduct(id) {
+        fetch("http://localhost:4000/products/" + id, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + userCredentials.accessToken
             }
-        } catch (error) {
-            alert("Unable to connect to the server!");
+        })
+            .then(response => {
+                if (response.status === 401) {
+                    // unauthorized response
+                    setUserCredentials(null)
+                    // redirect the user
+                    navigate("/auth/login")
+                    return
+                }
+
+                if (!response.ok) {
+                    throw new Error()
+                }
+
+                getProducts()
+            })
+            .catch(error => {
+                alert("Unable to delete the product")
+            })
+    }
+
+
+    // pagination functionality
+    let paginationButtons = []
+    for (let i = 1; i <= totalPages; i++) {
+        paginationButtons.push(
+            <li className={i === currentPage ? "page-item active" : "page-item"} key={i}>
+                <a className="page-link" href={"?page=" + i}
+                    onClick={event => {
+                        event.preventDefault()
+
+                        setCurrentPage(i)
+                    }}
+                >{i}</a>
+            </li>
+        )
+    }
+
+    // search functionality
+    function handleSearch(event) {
+        event.preventDefault()
+
+        let text = event.target.search.value
+        setSearch(text)
+        setCurrentPage(1)
+    }
+
+
+    // sort functionality
+    function sortTable(column) {
+        let orderBy = "desc"
+
+        if (column === sortColumn.column) {
+            // reverse orderBy
+            if (sortColumn.orderBy === "asc") orderBy = "desc"
+            else orderBy = "asc"
         }
+
+        setSortColumn({ column: column, orderBy: orderBy })
     }
 
     return (
-      <div className="container my-4">
-        <div className="row">
-            <div className="col-md-8 mx-auto rounded border p-4"> 
-                <h2 className="text-center mb-5">Edit Product</h2>
+        <div className="container my-4">
+            <h2 className="text-center mb-4">Products</h2>
 
-                <div className="row mb-3">
-                        <label className="col-sm-4 col-form-label">ID</label>
-                        <div className="col-sm-8">
-                            <input readOnly className="form-control-plaintext" defaultValue={params.id}/>
-                        </div>
-                    </div>
-
-
-
-                <form onSubmit={handleSubmit}>
-                    <div className="row mb-3">
-                        <label className="col-sm-4 col-form-label">Name</label>
-                        <div className="col-sm-8">
-                            <input className="form-control" name="name" />
-                            <span className="text-danger">{validationErrors.name}</span>
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <label className="col-sm-4 col-form-label">Brand</label>
-                        <div className="col-sm-8">
-                            <input className="form-control" name="brand" />
-                            <span className="text-danger">{validationErrors.brand}</span>
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <label className="col-sm-4 col-form-label">Category</label>
-                        <div className="col-sm-8">
-                            <select className="form-select" name="category">
-                                <option value="Other">Other</option>
-                                <option value="Phones">Phones</option>
-                                <option value="Computers">Computers</option>
-                                <option value="Accessories">Accessories</option>
-                                <option value="Printers">Printers</option>
-                                <option value="Cameras">Cameras</option>
-                            </select>
-                            <span className="text-danger">{validationErrors.category}</span>
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <label className="col-sm-4 col-form-label">Price</label>
-                        <div className="col-sm-8">
-                            <input className="form-control" name="price" type="number" step="0.01" min="1" />
-                            <span className="text-danger">{validationErrors.price}</span>
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <label className="col-sm-4 col-form-label">Description</label>
-                        <div className="col-sm-8">
-                            <textarea className="form-control" name="description" rows="4"></textarea>
-                            <span className="text-danger">{validationErrors.description}</span>
-                        </div>
-                    </div>
-
-
-                    <div className="row mb-3">
-                        <div className="offset-sm-4 col-sm-8">
-                           <img src={"https//:localhost:4000/images/ " + "22866337.jpg"} 
-                                width="150px" alt="..." 
-                           />
-                          
-                        </div>
-                    </div>
-
-
-                    <div className="row mb-3">
-                        <label className="col-sm-4 col-form-label">Image</label>
-                        <div className="col-sm-8">
-                            <input className="form-control" name="image" type="file" />
-                            <span className="text-danger">{validationErrors.image}</span>
-                        </div>
-                    </div>
-
-
-
-                    <div className="row mb-3">
-                        <label className="col-sm-4 col-form-label">Created At</label>
-                        <div className="col-sm-8">
-                            <input readOnly className="form-control" defaultValue={"2023-07-13"} />
-                            
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="offset-sm-4 col-sm-4 d-grid">
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                        </div>
-                        <div className="col-sm-4 d-grid">
-                            <Link className="btn btn-secondary" to="/admin/products" role="button">Cancel</Link>
-                        </div>
-                    </div>
-
-                </form>
-
+            <div className="row mb-3">
+                <div className="col">
+                    <Link className="btn btn-primary me-1" to="/admin/products/create" role="button">Create Product</Link>
+                    <button type="button" className="btn btn-outline-primary"
+                        onClick={getProducts}>Refresh</button>
+                </div>
+                <div className="col">
+                    <form className="d-flex" onSubmit={handleSearch}>
+                        <input className="form-control me-2" type="search" placeholder="Search" name="search" />
+                        <button className="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
             </div>
+
+
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th style={{ cursor: "pointer" }} onClick={() => sortTable("id")}>
+                            ID <SortArrow column="id" sortColumn={sortColumn.column} orderBy={sortColumn.orderBy} />
+                        </th>
+                        <th style={{ cursor: "pointer" }} onClick={() => sortTable("name")}>
+                            Name <SortArrow column="name" sortColumn={sortColumn.column} orderBy={sortColumn.orderBy} />
+                        </th>
+                        <th style={{ cursor: "pointer" }} onClick={() => sortTable("brand")}>
+                            Brand <SortArrow column="brand" sortColumn={sortColumn.column} orderBy={sortColumn.orderBy} />
+                        </th>
+                        <th style={{ cursor: "pointer" }} onClick={() => sortTable("category")}>
+                            Category <SortArrow column="category" sortColumn={sortColumn.column} orderBy={sortColumn.orderBy} />
+                        </th>
+                        <th style={{ cursor: "pointer" }} onClick={() => sortTable("price")}>
+                            Price <SortArrow column="price" sortColumn={sortColumn.column} orderBy={sortColumn.orderBy} />
+                        </th>
+                        <th>Image</th>
+                        <th style={{ cursor: "pointer" }} onClick={() => sortTable("createdAt")}>
+                            Created At <SortArrow column="createdAt" sortColumn={sortColumn.column} orderBy={sortColumn.orderBy} />
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        products.map((product, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{product.id}</td>
+                                    <td>{product.name}</td>
+                                    <td>{product.brand}</td>
+                                    <td>{product.category}</td>
+                                    <td>{product.price}$</td>
+                                    <td><img src={"http://localhost:4000/images/" + product.imageFilename}
+                                        width="100" alt="..." /></td>
+                                    <td>{product.createdAt.slice(0, 10)}</td>
+                                    <td style={{ width: "10px", whiteSpace: "nowrap" }}>
+                                        <Link className='btn btn-primary btn-sm me-1'
+                                            to={"/admin/products/edit/" + product.id}>Edit</Link>
+                                        <button type="button" className="btn btn-danger btn-sm"
+                                            onClick={() => deleteProduct(product.id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
+
+            <ul className="pagination">{paginationButtons}</ul>
         </div>
-    </div>      
-    );
+    )
+}
+
+
+
+function SortArrow({ column, sortColumn, orderBy }) {
+    if (column !== sortColumn) return null
+
+    if (orderBy === "asc") {
+        return <i className="bi bi-arrow-up"></i>
+    }
+
+    return <i className="bi bi-arrow-down"></i>
 }

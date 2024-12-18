@@ -2,7 +2,6 @@ import React from "react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
-
 export default function Home() {
 
     const [products, setProducts] = useState([])

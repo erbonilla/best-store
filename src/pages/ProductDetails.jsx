@@ -1,5 +1,5 @@
 import React from "react"
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 export default function ProductDetails() {
@@ -7,24 +7,26 @@ export default function ProductDetails() {
     const params = useParams()
     const [product, setProduct] = useState({})
 
-    const getProductDetails = useCallback(async () => {
+    async function getProductDetails() {
         try {
             let response = await fetch("http://localhost:4000/products/" + params.id)
             let data = await response.json()
 
             if (response.ok) {
                 setProduct(data)
-            } else {
+            }
+            else {
                 alert("Unable to get the product details")
             }
-        } catch (error) {
+        }
+        catch (error) {
             alert("Unable to connect to the server")
         }
-    }, [params.id]) // Add `params.id` as a dependency
+    }
 
     useEffect(() => {
         getProductDetails()
-    }, [getProductDetails]) // Add `getProductDetails` to the dependency array
+    }, [])
 
     return (
         <div className="container my-4">
@@ -43,13 +45,21 @@ export default function ProductDetails() {
                     <hr />
 
                     <div className="row mb-3">
-                        <div className="col-sm-3 fw-bold">Brand</div>
-                        <div className="col-sm-9">{product.brand}</div>
+                        <div className="col-sm-3 fw-bold">
+                            Brand
+                        </div>
+                        <div className="col-sm-9">
+                            {product.brand}
+                        </div>
                     </div>
 
                     <div className="row mb-3">
-                        <div className="col-sm-3 fw-bold">Category</div>
-                        <div className="col-sm-9">{product.category}</div>
+                        <div className="col-sm-3 fw-bold">
+                            Category
+                        </div>
+                        <div className="col-sm-9">
+                            {product.category}
+                        </div>
                     </div>
 
                     <div className="fw-bold">Description</div>

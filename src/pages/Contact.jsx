@@ -1,5 +1,5 @@
 
-import React from 'react'; // Ensure React is imported
+import React from 'react'; 
 
 export default function Contact() {
     return (

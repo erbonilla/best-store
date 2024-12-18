@@ -12,19 +12,17 @@ import ProductDetails from './pages/ProductDetails';
 import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import { AppContext } from './AppContext';
-import { AdminRoute, AuthenticatedUserRoute } from './components/authorization';
-import UserProfile from './pages/UserProfile';
-import UserList from './pages/admin/users/UserList';
-import UserDetails from './pages/admin/users/UserDetails';
+import { AdminRoute, AuthenticatedUserRoute } from './components/authorization.jsx';
+import UserProfile from './pages/UserProfile.jsx';
+
+// Import these two lines to fix the errors:
+import UserList from './pages/admin/users/UserList.jsx';
+import UserDetails from './pages/admin/users/UserDetails.jsx';
 
 function App() {
   function getStoredCredentials() {
     let data = localStorage.getItem("credentials");
-    if (data) {
-      let json = JSON.parse(data);
-      return json;
-    }
-    return null;
+    return data ? JSON.parse(data) : null;
   }
 
   const [userCredentials, setUserCredentials] = useState(getStoredCredentials());
@@ -42,17 +40,58 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/products/:id" element={<ProductDetails />} />
-          <Route path="/profile" element={<AuthenticatedUserRoute><UserProfile /></AuthenticatedUserRoute>} />
-
+          <Route
+            path="/profile"
+            element={
+              <AuthenticatedUserRoute>
+                <UserProfile />
+              </AuthenticatedUserRoute>
+            }
+          />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/login" element={<Login />} />
 
-          <Route path="/admin/products" element={<AdminRoute><ProductList /></AdminRoute>} />
-          <Route path="/admin/products/create" element={<AdminRoute><CreateProduct /></AdminRoute>} />
-          <Route path="/admin/products/edit/:id" element={<AdminRoute><EditProduct /></AdminRoute>} />
+          <Route
+            path="/admin/products"
+            element={
+              <AdminRoute>
+                <ProductList />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/products/create"
+            element={
+              <AdminRoute>
+                <CreateProduct />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/products/edit/:id"
+            element={
+              <AdminRoute>
+                <EditProduct />
+              </AdminRoute>
+            }
+          />
 
-          <Route path="/admin/users" element={<AdminRoute><UserList /></AdminRoute>} />
-          <Route path="/admin/users/details/:id" element={<AdminRoute><UserDetails /></AdminRoute>} />
+          <Route
+            path="/admin/users"
+            element={
+              <AdminRoute>
+                <UserList />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/users/details/:id"
+            element={
+              <AdminRoute>
+                <UserDetails />
+              </AdminRoute>
+            }
+          />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

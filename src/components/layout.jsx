@@ -1,19 +1,25 @@
-import React from "react"
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { AppContext } from "../AppContext"
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AppContext } from "../AppContext";
 
 export function Navbar() {
-
-    const { userCredentials, setUserCredentials } = useContext(AppContext)
+    const { userCredentials, setUserCredentials } = useContext(AppContext);
 
     return (
         <nav className="navbar navbar-expand-lg bg-white border-bottom box-shadow">
             <div className="container">
                 <Link className="navbar-brand" to="/">
-                    <img src="/icon.png" alt="..." width="30" className="me-2" /> Best Store
+                    <img src="/icon.png" alt="Best Store Icon" width="30" className="me-2" /> Best Store
                 </Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -24,65 +30,93 @@ export function Navbar() {
                         <li className="nav-item">
                             <Link className="nav-link text-dark" to="/contact">Contact</Link>
                         </li>
-
                     </ul>
-                    {
-                        userCredentials && userCredentials.user.role === "admin" &&
+
+                    {userCredentials && userCredentials.user.role === "admin" && (
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button
+                                    className="nav-link dropdown-toggle text-dark"
+                                    type="button"
+                                    id="adminDropdown"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
                                     Admin
-                                </a>
-                                <ul className="dropdown-menu">
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="adminDropdown">
                                     <li><Link className="dropdown-item" to="/admin/products">Products</Link></li>
                                     <li><Link className="dropdown-item" to="/admin/users">Users</Link></li>
                                     <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
                                     <li><hr className="dropdown-divider" /></li>
-                                    <li><Link className="dropdown-item" onClick={() => setUserCredentials(null)} to="/">Logout</Link></li>
+                                    <li>
+                                        <Link
+                                            className="dropdown-item"
+                                            onClick={() => setUserCredentials(null)}
+                                            to="/"
+                                        >
+                                            Logout
+                                        </Link>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
-                    }
+                    )}
 
-                    {
-                        userCredentials && userCredentials.user.role !== "admin" &&
+                    {userCredentials && userCredentials.user.role !== "admin" && (
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button
+                                    className="nav-link dropdown-toggle text-dark"
+                                    type="button"
+                                    id="clientDropdown"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
                                     Client
-                                </a>
-                                <ul className="dropdown-menu">
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="clientDropdown">
                                     <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
                                     <li><hr className="dropdown-divider" /></li>
-                                    <li><Link className="dropdown-item" onClick={() => setUserCredentials(null)} to="/">Logout</Link></li>
+                                    <li>
+                                        <Link
+                                            className="dropdown-item"
+                                            onClick={() => setUserCredentials(null)}
+                                            to="/"
+                                        >
+                                            Logout
+                                        </Link>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
-                    }
+                    )}
 
-                    {
-                        !userCredentials &&
+                    {!userCredentials && (
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="btn btn-outline-primary me-2" to="/auth/register" role="button">Register</Link>
+                                <Link className="btn btn-outline-primary me-2" to="/auth/register" role="button">
+                                    Register
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="btn btn-primary" to="/auth/login" role="button">Login</Link>
+                                <Link className="btn btn-primary" to="/auth/login" role="button">
+                                    Login
+                                </Link>
                             </li>
                         </ul>
-                    }
+                    )}
                 </div>
             </div>
         </nav>
-    )
+    );
 }
-
 
 export function Footer() {
     return (
         <div className="text-center p-4 border-top">
-            <img src="/icon.png" alt="..." width="30" className="me-2" />
+            <img src="/icon.png" alt="Best Store Icon" width="30" className="me-2" />
             Best Store
         </div>
-    )
+    );
 }

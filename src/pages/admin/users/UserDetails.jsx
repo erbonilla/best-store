@@ -1,52 +1,47 @@
-import React from "react";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../../AppContext";
 
-
 export default function UserDetails() {
-    const [user, setUser] = useState({})
-    const params = useParams()
-    const { userCredentials, setUserCredentials } = useContext(AppContext)
-    const navigate = useNavigate()
+    const [user, setUser] = useState({});
+    const params = useParams();
+    const { userCredentials, setUserCredentials } = useContext(AppContext);
+    const navigate = useNavigate();
 
-    async function getUserDetails() {
+    // Wrap the function in useCallback to stabilize its reference
+    const getUserDetails = useCallback(async () => {
         try {
-            const response = await fetch("http://localhost:4000/users/" + params.id, {
+            const response = await fetch(`http://localhost:4000/users/${params.id}`, {
                 method: "GET",
                 headers: {
-                    Authorization: "Bearer " + userCredentials.accessToken
-                }
-            })
+                    Authorization: "Bearer " + userCredentials.accessToken,
+                },
+            });
 
-            const data = await response.json()
+            const data = await response.json();
 
             if (response.ok) {
-                setUser(data)
+                setUser(data);
+            } else if (response.status === 401) {
+                // Unauthorized response
+                setUserCredentials(null);
+                navigate("/auth/login"); // Redirect to the login page
+            } else {
+                alert("Unable to read the user details: " + data);
             }
-            else if (response.status === 401) {
-                //unauthorized response
-                setUserCredentials(null)
-                // redirect to the login page
-                navigate("/auth/login")
-            }
-            else {
-                alert("Unable to read the user details: " + data)
-            }
+        } catch (error) {
+            alert("Unable to connect to the server");
         }
-        catch (error) {
-            alert("Unable to connect to the server")
-        }
-    }
+    }, [params.id, userCredentials, navigate, setUserCredentials]);
 
+    // Add getUserDetails to the dependency array
     useEffect(() => {
-        getUserDetails()
-    }, [])
+        getUserDetails();
+    }, [getUserDetails]);
 
     return (
         <div className="container my-4">
             <h2 className="mb-3">User Details</h2>
-
             <hr />
 
             <div className="row mb-3">
@@ -81,14 +76,22 @@ export default function UserDetails() {
 
             <div className="row mb-3">
                 <div className="col-4">Role</div>
-                <div className="col-8">{!user.id ? ""
-                    : user.role === "admin" ? <span className="badge text-bg-warning">Admin</span>
-                        : <span className="badge text-bg-success">Client</span>}</div>
+                <div className="col-8">
+                    {!user.id ? (
+                        ""
+                    ) : user.role === "admin" ? (
+                        <span className="badge text-bg-warning">Admin</span>
+                    ) : (
+                        <span className="badge text-bg-success">Client</span>
+                    )}
+                </div>
             </div>
 
             <hr />
 
-            <Link className="btn btn-secondary btn-sm" to="/admin/users" role="button">Back</Link>
+            <Link className="btn btn-secondary btn-sm" to="/admin/users" role="button">
+                Back
+            </Link>
         </div>
-    )
+    );
 }

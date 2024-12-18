@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Footer, Navbar } from './components/layout';
-import Home from './pages/Home';
+import { Footer, Navbar } from './components/layout.jsx';
+import Home from './pages/Home.jsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Contact from './pages/Contact';
-import NotFound from './pages/NotFound';
-import ProductList from './pages/admin/products/ProductList';
-import CreateProduct from './pages/admin/products/CreateProduct';
-import EditProduct from './pages/admin/products/EditProduct';
-import ProductDetails from './pages/ProductDetails';
-import Register from './pages/auth/Register';
-import Login from './pages/auth/Login';
-import { AppContext } from './AppContext';
+import Contact from './pages/Contact.jsx';
+import NotFound from './pages/NotFound.jsx';
+import ProductList from './pages/admin/products/ProductList.jsx';
+import CreateProduct from './pages/admin/products/CreateProduct.jsx';
+import EditProduct from './pages/admin/products/EditProduct.jsx';
+import ProductDetails from './pages/ProductDetails.jsx';
+import Register from './pages/auth/Register.jsx';
+import Login from './pages/auth/Login.jsx';
+import { AppContext } from './AppContext.jsx';
 import { AdminRoute, AuthenticatedUserRoute } from './components/authorization.jsx';
 import UserProfile from './pages/UserProfile.jsx';
 

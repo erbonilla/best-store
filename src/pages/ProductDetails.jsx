@@ -8,7 +8,7 @@ export default function ProductDetails() {
   // Wrap getProductDetails in useCallback to prevent unnecessary recreation
   const getProductDetails = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:4000/products/${params.id}`);
+      const response = await fetch(process.env.REACT_APP_WEBAPI_URL + `/products/${params.id}`);
       const data = await response.json();
 
       if (response.ok) {
@@ -31,7 +31,7 @@ export default function ProductDetails() {
       <div className="row">
         <div className="col-md-4 text-center">
           <img
-            src={`http://localhost:4000/images/${product.imageFilename}`}
+            src={process.env.REACT_APP_WEBAPI_URL + `/images/${product.imageFilename}`}
             className="img-fluid mb-3"
             alt={product.name || "Product Image"}
             width="250"

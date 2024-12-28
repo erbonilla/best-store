@@ -22,7 +22,7 @@ export default function Home() {
 
 
     function getProducts() {
-        let url = "http://localhost:4000/products?_page=" + currentPage + "&_limit=" + pageSize
+        let url = process.env.REACT_APP_WEBAPI_URL + "/products?_page=" + currentPage + "&_limit=" + pageSize
         if (filterParams.brand) {
             url = url + "&brand=" + filterParams.brand
         }
@@ -166,7 +166,7 @@ export default function Home() {
 function ProductItem({ product }) {
     return (
         <div className="rounded border shadow p-4 text-center h-100">
-            <img src={"http://localhost:4000/images/" + product.imageFilename}
+            <img src={process.env.REACT_APP_WEBAPI_URL + "/images/" + product.imageFilename}
                 className="img-fluid" alt="..."
                 style={{ height: "220px", objectFit: "contain" }} />
             <hr />

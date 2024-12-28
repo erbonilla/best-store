@@ -10,7 +10,7 @@ export function Navbar() {
         <nav className="navbar navbar-expand-lg bg-white border-bottom box-shadow">
             <div className="container">
                 <Link className="navbar-brand" to="/">
-                    <img src="/icon.png" alt="..." width="30" className="me-2" /> Best Store
+                    <img src={process.env.PUBLIC_URL + "/icon.png"} alt="..." width="30" className="me-2" /> Best Store
                 </Link>
                 <button
                     className="navbar-toggler"
@@ -139,7 +139,7 @@ export function Navbar() {
 export function Footer() {
     return (
         <div className="text-center p-4 border-top">
-            <img src="/icon.png" alt="..." width="30" className="me-2" />
+            <img src={process.env.PUBLIC_URL + "/icon.png"} alt="..." width="30" className="me-2" />
             Best Store
         </div>
     );

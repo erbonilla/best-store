@@ -34,7 +34,7 @@ function App() {
 
   return (
     <AppContext.Provider value={{ userCredentials, setUserCredentials }}>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

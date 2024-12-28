@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React from "react"; // Ensure React is imported
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../AppContext";
 
@@ -9,7 +10,7 @@ export function Navbar() {
         <nav className="navbar navbar-expand-lg bg-white border-bottom box-shadow">
             <div className="container">
                 <Link className="navbar-brand" to="/">
-                    <img src="/icon.png" alt="Best Store Icon" width="30" className="me-2" /> Best Store
+                    <img src="/icon.png" alt="..." width="30" className="me-2" /> Best Store
                 </Link>
                 <button
                     className="navbar-toggler"
@@ -25,30 +26,46 @@ export function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link text-dark" aria-current="page" to="/">Home</Link>
+                            <Link className="nav-link text-dark" aria-current="page" to="/">
+                                Home
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-dark" to="/contact">Contact</Link>
+                            <Link className="nav-link text-dark" to="/contact">
+                                Contact
+                            </Link>
                         </li>
                     </ul>
-
                     {userCredentials && userCredentials.user.role === "admin" && (
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
                                 <button
                                     className="nav-link dropdown-toggle text-dark"
                                     type="button"
-                                    id="adminDropdown"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                 >
                                     Admin
                                 </button>
-                                <ul className="dropdown-menu" aria-labelledby="adminDropdown">
-                                    <li><Link className="dropdown-item" to="/admin/products">Products</Link></li>
-                                    <li><Link className="dropdown-item" to="/admin/users">Users</Link></li>
-                                    <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
-                                    <li><hr className="dropdown-divider" /></li>
+                                <ul className="dropdown-menu">
+                                    <li>
+                                        <Link className="dropdown-item" to="/admin/products">
+                                            Products
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item" to="/admin/users">
+                                            Users
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item" to="/profile">
+                                            Profile
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <hr className="dropdown-divider" />
+                                    </li>
                                     <li>
                                         <Link
                                             className="dropdown-item"
@@ -62,22 +79,26 @@ export function Navbar() {
                             </li>
                         </ul>
                     )}
-
                     {userCredentials && userCredentials.user.role !== "admin" && (
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
                                 <button
                                     className="nav-link dropdown-toggle text-dark"
                                     type="button"
-                                    id="clientDropdown"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                 >
                                     Client
                                 </button>
-                                <ul className="dropdown-menu" aria-labelledby="clientDropdown">
-                                    <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
-                                    <li><hr className="dropdown-divider" /></li>
+                                <ul className="dropdown-menu">
+                                    <li>
+                                        <Link className="dropdown-item" to="/profile">
+                                            Profile
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <hr className="dropdown-divider" />
+                                    </li>
                                     <li>
                                         <Link
                                             className="dropdown-item"
@@ -91,11 +112,14 @@ export function Navbar() {
                             </li>
                         </ul>
                     )}
-
                     {!userCredentials && (
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="btn btn-outline-primary me-2" to="/auth/register" role="button">
+                                <Link
+                                    className="btn btn-outline-primary me-2"
+                                    to="/auth/register"
+                                    role="button"
+                                >
                                     Register
                                 </Link>
                             </li>
@@ -115,7 +139,7 @@ export function Navbar() {
 export function Footer() {
     return (
         <div className="text-center p-4 border-top">
-            <img src="/icon.png" alt="Best Store Icon" width="30" className="me-2" />
+            <img src="/icon.png" alt="..." width="30" className="me-2" />
             Best Store
         </div>
     );

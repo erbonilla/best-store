@@ -24,7 +24,7 @@ export default function ProductList() {
 
 
     function getProducts() {
-        let url = "http://localhost:4000/products?_page=" + currentPage + "&_limit=" + pageSize
+        let url = process.env.REACT_APP_WEBAPI_URL + "/products?_page=" + currentPage + "&_limit=" + pageSize
             + "&q=" + search + "&_sort=" + sortColumn.column + "&_order=" + sortColumn.orderBy
         console.log("url=" + url)
         fetch(url)
@@ -52,7 +52,7 @@ export default function ProductList() {
 
 
     function deleteProduct(id) {
-        fetch("http://localhost:4000/products/" + id, {
+        fetch(process.env.REACT_APP_WEBAPI_URL + "/products/" + id, {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + userCredentials.accessToken
@@ -172,7 +172,7 @@ export default function ProductList() {
                                     <td>{product.brand}</td>
                                     <td>{product.category}</td>
                                     <td>{product.price}$</td>
-                                    <td><img src={"http://localhost:4000/images/" + product.imageFilename}
+                                    <td><img src={process.env.REACT_APP_WEBAPI_URL + "/images/" + product.imageFilename}
                                         width="100" alt="..." /></td>
                                     <td>{product.createdAt.slice(0, 10)}</td>
                                     <td style={{ width: "10px", whiteSpace: "nowrap" }}>

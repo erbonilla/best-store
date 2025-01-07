@@ -31,7 +31,7 @@ export default function Register() {
         delete user.confirm_password
 
         try {
-            const response = await fetch("http://localhost:4000/register", {
+            const response = await fetch(process.env.REACT_APP_WEBAPI_URL + "/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

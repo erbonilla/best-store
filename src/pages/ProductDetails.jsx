@@ -31,7 +31,7 @@ export default function ProductDetails() {
       <div className="row">
         <div className="col-md-4 text-center">
           <img
-            src={process.env.REACT_APP_WEBAPI_URL + `/images/${product.imageFilename}`}
+            src={process.env.REACT_APP_WEBAPI_URL + `/images/` + product.imageFilename}
             className="img-fluid mb-3"
             alt={product.name || "Product Image"}
             width="250"

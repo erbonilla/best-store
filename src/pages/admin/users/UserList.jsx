@@ -16,7 +16,7 @@ export default function UserList() {
     const getUsers = useCallback(async () => {
         try {
             const response = await fetch(
-                `http://localhost:4000/users?_page=${currentPage}&_limit=${pageSize}`,
+                process.env.REACT_APP_WEBAPI_URL + "/users?_page=" + currentPage + "&_limit=" + pageSize,
                 {
                     method: "GET",
                     headers: {

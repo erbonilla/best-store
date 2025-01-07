@@ -14,7 +14,7 @@ export default function EditProduct() {
     const navigate = useNavigate()
 
     function getProduct() {
-        fetch("http://localhost:4000/products/" + params.id)
+        fetch(process.env.REACT_APP_WEBAPI_URL + "/products/" + params.id)
             .then(response => {
                 if (response.ok) {
                     return response.json()
@@ -46,7 +46,7 @@ export default function EditProduct() {
         }
 
         try {
-            const response = await fetch("http://localhost:4000/products/" + params.id, {
+            const response = await fetch(process.env.REACT_APP_WEBAPI_URL + "/products/" + params.id, {
                 method: "PATCH",
                 headers: {
                     "Authorization": "Bearer " + userCredentials.accessToken
@@ -143,7 +143,7 @@ export default function EditProduct() {
 
                             <div className="row mb-3">
                                 <div className="offset-sm-4 col-sm-8">
-                                    <img src={"http://localhost:4000/images/" + initialData.imageFilename}
+                                    <img src={process.env.REACT_APP_WEBAPI_URL + "/images/" + initialData.imageFilename}
                                         width="150" alt="..." />
                                 </div>
                             </div>

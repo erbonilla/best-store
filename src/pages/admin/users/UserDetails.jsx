@@ -11,7 +11,7 @@ export default function UserDetails() {
     // Wrap the function in useCallback to stabilize its reference
     const getUserDetails = useCallback(async () => {
         try {
-            const response = await fetch(`http://localhost:4000/users/${params.id}`, {
+            const response = await fetch(process.env.REACT_APP_WEBAPI_URL + "/users/" + params.id, {
                 method: "GET",
                 headers: {
                     Authorization: "Bearer " + userCredentials.accessToken,

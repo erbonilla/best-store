@@ -25,7 +25,7 @@ export default function CreateProduct() {
         }
 
         try {
-            const response = await fetch("http://localhost:4000/products", {
+            const response = await fetch(process.env.REACT_APP_WEBAPI_URL + "/products", {
                 method: "POST",
                 headers: {
                     "Authorization": "Bearer " + userCredentials.accessToken

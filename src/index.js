@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Footer, Navbar } from './components/layout.jsx';
 import Home from './pages/Home.jsx';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Contact from './pages/Contact.jsx';
 import NotFound from './pages/NotFound.jsx';
 import ProductList from './pages/admin/products/ProductList.jsx';
@@ -34,7 +34,7 @@ function App() {
 
   return (
     <AppContext.Provider value={{ userCredentials, setUserCredentials }}>
-      <HashRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -96,7 +96,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
-      </HashRouter>
+      </BrowserRouter>
     </AppContext.Provider>
   );
 }

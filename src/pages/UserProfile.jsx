@@ -209,7 +209,7 @@ function UpdatePassword() {
         const passwordObj = { password }
 
         try {
-            const response = await fetch("http://localhost:4000/users/" + userCredentials.user.id, {
+            const response = await fetch(process.env.REACT_APP_WEBAPI_URL + "/users/" + userCredentials.user.id, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

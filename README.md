@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+## 🛒 E-Commerce React App (Personal Project)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a personal project I created to dive deep into **React.js** and modern front-end development.  
+The goal? Build a complete **e-commerce front-end application** using React and simulate real-world features like routing, authentication, data handling, and more.
 
-## Available Scripts
+The app is built as a **Single Page Application (SPA)**, where one HTML file handles all views dynamically through React components. For the backend, I used **JSON Server** to simulate a REST API, so I could focus purely on front-end functionality.
 
-In the project directory, you can run:
+Throughout this project, I implemented features like **product management**, **user authentication**, **form validation**, and **image upload** — all essential elements of a full-featured app.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ⚙️ Main Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 🔹 Create, Read, Update, and Delete (CRUD) products using **Fetch API**
+- 🔹 Use **React Router** to manage routes and protect private views
+- 🔹 Handle **user registration**, **login**, and **role-based authorization** with **JWT**
+- 🔹 Build reusable **React components** using **JavaScript**, **JSX**, and **Bootstrap**
+- 🔹 Implement **React Hooks**: `useState`, `useEffect`, and `useContext`
+- 🔹 Manage state across components and use **local storage** for persistence
+- 🔹 Build **controlled and uncontrolled forms** with client/server validation
+- 🔹 Add **pagination**, **search**, **filter**, and **sorting**
+- 🔹 Upload and display **product images**
+- 🔹 Apply styling using **Bootstrap CSS**, JS, and icons via CDN
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🛠️ Tech Stack
 
-### `npm run build`
+- **React.js**
+- **JavaScript / JSX**
+- **Bootstrap 5**
+- **JSON Server (mock backend)**
+- **Fetch API**
+- **JWT (JSON Web Tokens)**
+- **React Router DOM**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🔑 Why I Built This
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+I created this project to solidify my knowledge in front-end development using React.  
+My goal was to simulate what a real-world e-commerce platform might need, from a user-friendly interface to backend communication and data handling.
 
-### `npm run eject`
+This project helped me explore advanced React patterns, improve my code structure, and better understand how frontend and backend work together.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📦 Future Improvements
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Integrate with a real backend (e.g., Node.js or Firebase)
+- Add cart and checkout functionality
+- Improve responsive design
+- Unit testing with Jest or React Testing Library
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 📸 Screenshot
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![App Screenshot](./img/screenshot.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🙌 Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Inspired by learning resources and real-world app requirements — built with ❤️ and lots of curiosity.

@@ -56,7 +56,7 @@ This project helped me explore advanced React patterns, improve my code structur
 
 ## 📸 Screenshot
 
-![App Screenshot](./img/screenshot.png)
+![App Screenshot](./src/screenshot.png)
 
 ---
 
